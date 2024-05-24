@@ -400,10 +400,11 @@ def _plot_model_2d(node_labels, element_labels, offset_nd_label, axis_off,
             xt = ecrd[0, 0]
             yt = ecrd[0, 1]
 
-            # ax.plot([ecrd[0, 0], ecrd[2, 0], ecrd[2, 0], ecrd[0, 0],
-            #          ecrd[0, 0]],
-            #         [ecrd[1, 1], ecrd[1, 1], ecrd[3, 1], ecrd[3, 1],
-            #          ecrd[1, 1]], **fmt_model_joint2d)
+            # EDIT: plot lines
+            ax.plot([ecrd[0, 0], ecrd[2, 0], ecrd[2, 0], ecrd[0, 0],
+                     ecrd[0, 0]],
+                    [ecrd[1, 1], ecrd[1, 1], ecrd[3, 1], ecrd[3, 1],
+                     ecrd[1, 1]], **fmt_model_joint2d)
 
             if element_labels:
                 ax.text(xt, yt, f'{ele_tag}', va='top', ha='left',
@@ -713,7 +714,8 @@ def _plot_model_3d(node_labels, element_labels, offset_nd_label,
                     ax.plot(ecrd_eles[0, 0] + dxi, ecrd_eles[0, 1] + dyi, ecrd_eles[0, 2] + dzi, **fmt_gauss_points)
 
         elif (ele_classtag == EleClassTag.truss
-              or ele_classtag == EleClassTag.trussSection):
+              or ele_classtag == EleClassTag.trussSection
+              or ele_classtag == EleClassTag.TwoNodeLink):
 
             nen = 2
             ele_node_tags = ops.eleNodes(ele_tag)
@@ -821,8 +823,8 @@ def _plot_model_3d(node_labels, element_labels, offset_nd_label,
             #                 ops.nodeCoord(node_tag)[2]+_offset,
             #                 f'{node_tag}', va='bottom', ha='left', color='blue')
 
-        elif (ele_classtag in {EleClassTag.TenNodeTetrahedron,
-                               EleClassTag.TenNodeTetrahedronSK}):
+        elif (ele_classtag == EleClassTag.TenNodeTetrahedron
+              or ele_classtag == EleClassTag.TenNodeTetrahedronSK):
 
             nen = 10
             nodes_geo_order = [0, 4, 1, 5, 2, 6, 0]
@@ -1163,8 +1165,7 @@ def _plot_model_3d(node_labels, element_labels, offset_nd_label,
             #                 f'{node_tag}', va='bottom', ha='left', color='blue')
 
         # 3d zeroLength, two node link element plot_model
-        elif (ele_classtag == EleClassTag.ZeroLength or
-              ele_classtag == EleClassTag.TwoNodeLink):
+        elif (ele_classtag == EleClassTag.ZeroLength):
 
             nen = 2
 
@@ -1180,10 +1181,11 @@ def _plot_model_3d(node_labels, element_labels, offset_nd_label,
             yt = ecrd[0, 1]
             zt = ecrd[0, 2]
 
-            # ax.plot([ecrd[0, 0], ecrd[2, 0], ecrd[2, 0], ecrd[0, 0],
-            #          ecrd[0, 0]],
-            #         [ecrd[1, 1], ecrd[1, 1], ecrd[3, 1], ecrd[3, 1],
-            #          ecrd[1, 1]], **fmt_model_joint2d)
+            # EDIT: Plot lines
+            # ax.plot(ecrd[:, 0],ecrd[:, 1],ecrd[:, 2], **fmt_model_joint2d)
+            # import IPython
+            # IPython.embed()
+            # print(f"ax.plot({ecrd[:, 0]},{ecrd[:, 1]},{ecrd[:, 2]}, {**fmt_model_joint2d})")
 
             if element_labels:
                 ax.text(xt, yt, zt, f'{ele_tag}', va='top', ha='left',

@@ -455,6 +455,7 @@ def _plot_defo_mode_3d(modeNo, sfac, nep, unDefoFlag, fmt_defo, fmt_undefo,
         # if (ele_classtag == EleClassTag.truss):
         if (ele_classtag == EleClassTag.ElasticBeam3d
             or ele_classtag == EleClassTag.ForceBeamColumn3d
+            # or ele_classtag == EleClassTag.RigidLink
             or ele_classtag == EleClassTag.DispBeamColumn3d
             or ele_classtag == EleClassTag.ElasticTimoshenkoBeam3d):
 
@@ -502,7 +503,8 @@ def _plot_defo_mode_3d(modeNo, sfac, nep, unDefoFlag, fmt_defo, fmt_undefo,
                 ax.plot(xd, yd, zd, **fmt_nodes)
 
         elif (ele_classtag == EleClassTag.truss
-              or ele_classtag == EleClassTag.trussSection):
+              or ele_classtag == EleClassTag.trussSection
+              or ele_classtag == EleClassTag.TwoNodeLink):
 
             nen, ndf = 2, 3
 
@@ -534,8 +536,7 @@ def _plot_defo_mode_3d(modeNo, sfac, nep, unDefoFlag, fmt_defo, fmt_undefo,
 
         elif (ele_classtag == EleClassTag.ZeroLength
               or ele_classtag == EleClassTag.ZeroLengthSection
-              or ele_classtag == EleClassTag.CoupledZeroLength
-              or ele_classtag == EleClassTag.TwoNodeLink):
+              or ele_classtag == EleClassTag.CoupledZeroLength):
 
             # nen, ndf = 2, 6
             ndf = ops.getNDF()[0]
